@@ -1,0 +1,39 @@
+#include <iostream>
+#include <thread>
+#include <chrono>
+
+using namespace std;
+
+// Delay function in milliseconds
+void delay(unsigned int k)
+{
+    this_thread::sleep_for(chrono::milliseconds(k));
+}
+
+int main()
+{
+    // Simulated LPC214x Port 0 registers
+    unsigned int IODIR0 = 0xFFFFFFFF;
+    unsigned int IOSET0;
+    unsigned int IOCLR0;
+
+    // Configure Port 0 as output
+    IODIR0 = 0xFFFFFFFF;
+
+    while (true)
+    {
+        // Set P0.15-P0.8 HIGH
+        IOSET0 = 0x0000FF00;
+
+        cout << "OUTPUT: LEDs P0.15-P0.8 are blinking" << endl;
+
+        delay(1000);
+
+        // Set P0.15-P0.8 LOW
+        IOCLR0 = 0x0000FF00;
+
+        delay(1000);
+    }
+
+    return 0;
+}
